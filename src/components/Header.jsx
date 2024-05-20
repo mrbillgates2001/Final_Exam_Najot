@@ -20,7 +20,7 @@ const Header = () => {
 				<Link to="/" className="logo text-[20px] text-primary font-semibold">
 					CRYPTOFOLIO
 				</Link>
-				<nav className="flex_center_between gap-2">
+				<nav className="flex_center_center gap-1">
 					<button onClick={toggleTheme} className="text-primary text-[28px]">
 						{theme === "light" ? <IoIosMoon /> : <IoIosSunny />}
 					</button>
