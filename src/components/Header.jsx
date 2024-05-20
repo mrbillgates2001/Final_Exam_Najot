@@ -82,7 +82,7 @@ const Header = () => {
 						</button>
 						<button
 							onClick={toggleSidebar}
-							className="hidden max-sm:block burger">
+							className="hidden max-sm:block burger text-[30px]">
 							{isSidebarOpen ? <GiHamburgerMenu /> : <MdClose />}
 						</button>
 					</div>
