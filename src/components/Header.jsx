@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useCurrency } from "../contexts/currencyContext";
 import { useTheme } from "../contexts/modeContext";
 import { IoIosMoon, IoIosSunny } from "react-icons/io";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { MdClose } from "react-icons/md";
 
 const Header = () => {
 	const { toggleSidebar, isSidebarOpen } = useSidebar();
@@ -17,10 +19,20 @@ const Header = () => {
 				zIndex: "100",
 			}}>
 			<div className="container flex_center_between gap-2">
-				<Link to="/" className="logo text-[20px] text-primary font-semibold">
-					CRYPTOFOLIO
-				</Link>
-				<nav className="flex_center_center gap-1">
+				<div className="flex items-center gap-2">
+					<Link
+						to="/"
+						className="logo text-[20px] max-sm:hidden text-primary font-semibold">
+						CRYPTOFOLIO
+					</Link>
+					<Link
+						to="/"
+						className="hidden max-sm:block logo text-[20px] text-primary font-semibold">
+						<img src="logo.png" alt="" width={40} height={40} />
+					</Link>
+				</div>
+
+				<nav className="flex_center_center gap-4">
 					<button onClick={toggleTheme} className="text-primary text-[28px]">
 						{theme === "light" ? <IoIosMoon /> : <IoIosSunny />}
 					</button>
@@ -62,11 +74,16 @@ const Header = () => {
 							UZS
 						</option>
 					</select>
-					<button
-						onClick={toggleSidebar}
-						className="uppercase bg-primary text-[14px] py-1 px-3 text-black font-bold hover:bg-cyan-600 hover:transition-all w-[150px] max-sm:w-[70px]  max-sm:text-[14px] max-sm:p-1 max-sm:rounded-md">
-						{isSidebarOpen ? "Watch List" : "Close List"}
-					</button>
+					<div>
+						<button
+							onClick={toggleSidebar}
+							className="uppercase bg-primary text-[14px] py-1 px-3 text-black font-bold hover:bg-cyan-600 hover:transition-all w-[150px] max-sm:hidden">
+							{isSidebarOpen ? "Watch List" : "Close List"}
+						</button>
+						<button onClick={toggleSidebar} className="hidden max-sm:block">
+							{isSidebarOpen ? <GiHamburgerMenu /> : <MdClose />}
+						</button>
+					</div>
 				</nav>
 			</div>
 		</header>
