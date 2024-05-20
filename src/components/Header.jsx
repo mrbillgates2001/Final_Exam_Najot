@@ -14,7 +14,7 @@ const Header = () => {
 
 	return (
 		<header
-			className="bg-[#0000009e] p-2 fixed  w-full top-0 right-0 left-0 "
+			className="bg-[#0000009e] p-2 max-sm:py-[14px] fixed  w-full top-0 right-0 left-0 "
 			style={{
 				zIndex: "100",
 			}}>
