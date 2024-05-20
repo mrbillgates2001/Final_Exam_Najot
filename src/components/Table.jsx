@@ -15,6 +15,9 @@ const Table = () => {
 	const { currency } = useCurrency();
 	const rowsPerPage = 5;
 
+	const [sortCriteria, setSortCriteria] = useState(null);
+	const [sortOrder, setSortOrder] = useState("asc");
+
 	const handleIcon = (item, e) => {
 		if (e && e.stopPropagation) {
 			e.stopPropagation();
@@ -25,10 +28,34 @@ const Table = () => {
 		}
 	};
 
-	const filteredData = data.filter(
-		(item) =>
-			item.name.toLowerCase().includes(search.toLowerCase()) ||
-			item.symbol.toLowerCase().includes(search.toLowerCase())
+	const handleSort = (criteria) => {
+		const order =
+			sortCriteria === criteria && sortOrder === "asc" ? "desc" : "asc";
+		setSortCriteria(criteria);
+		setSortOrder(order);
+	};
+
+	const getSortedData = (data) => {
+		if (!sortCriteria) return data;
+
+		return data.sort((a, b) => {
+			const valueA = sortCriteria === "price" ? a.current_price : a.market_cap;
+			const valueB = sortCriteria === "price" ? b.current_price : b.market_cap;
+
+			if (sortOrder === "asc") {
+				return valueA - valueB;
+			} else {
+				return valueB - valueA;
+			}
+		});
+	};
+
+	const filteredData = getSortedData(
+		data.filter(
+			(item) =>
+				item.name.toLowerCase().includes(search.toLowerCase()) ||
+				item.symbol.toLowerCase().includes(search.toLowerCase())
+		)
 	);
 
 	const pageCount = Math.ceil(filteredData.length / rowsPerPage);
@@ -112,7 +139,7 @@ const Table = () => {
 						setSearch(e.target.value);
 						setCurrentPage(1);
 					}}
-					type="serach"
+					type="search"
 					placeholder="Search For a Crypto Currency..."
 					className="w-full text-[18px] p-3 text-white outline-none bg-transparent border-2 border-gray-600 mb-5"
 				/>
@@ -127,9 +154,20 @@ const Table = () => {
 						}}>
 						<tr className="text-[18px] font-black">
 							<th className="w-[40%] p-3 text-left">Coin</th>
-							<th className="p-3">Price</th>
+							<th
+								className="p-3 cursor-pointer"
+								onClick={() => handleSort("price")}>
+								Price{" "}
+								{sortCriteria === "price" && (sortOrder === "asc" ? "▲" : "▼")}
+							</th>
 							<th className="p-3">24h Changes</th>
-							<th className="p-3">Market Cap</th>
+							<th
+								className="p-3 cursor-pointer"
+								onClick={() => handleSort("market_cap")}>
+								Market Cap{" "}
+								{sortCriteria === "market_cap" &&
+									(sortOrder === "asc" ? "▲" : "▼")}
+							</th>
 						</tr>
 					</thead>
 					<tbody className="px-5">
