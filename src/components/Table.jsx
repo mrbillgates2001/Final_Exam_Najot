@@ -25,7 +25,6 @@ const Table = () => {
 		}
 	};
 
-	// Filtered and paginated data
 	const filteredData = data.filter(
 		(item) =>
 			item.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -109,7 +108,10 @@ const Table = () => {
 				</h1>
 				<input
 					value={search}
-					onChange={(e) => setSearch(e.target.value)}
+					onChange={(e) => {
+						setSearch(e.target.value);
+						setCurrentPage(1);
+					}}
 					type="serach"
 					placeholder="Search For a Crypto Currency..."
 					className="w-full text-[18px] p-3 text-white outline-none bg-transparent border-2 border-gray-600 mb-5"
@@ -369,7 +371,6 @@ const Table = () => {
 				</table>
 			</div>
 
-			{/* Pagination */}
 			<div className="flex justify-center pb-10 space-x-2 text-primary">
 				<button
 					onClick={() => handlePageChange(currentPage - 1)}

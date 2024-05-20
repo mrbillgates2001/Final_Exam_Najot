@@ -14,7 +14,7 @@ const ViewDetails = () => {
 	const navigate = useNavigate();
 
 	return (
-		<div className="mt-[60px] flex pb-[33px] relative flex-wrap">
+		<div className="mt-[60px] flex pb-[33px] relative max-sm:flex-wrap">
 			<button
 				onClick={() => navigate("/")}
 				className="text-[35px] text-black absolute top-5 left-5"
