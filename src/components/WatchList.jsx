@@ -35,7 +35,7 @@ const WatchList = () => {
 				gap: "20px",
 				flexDirection: "column",
 				textAlign: "center",
-				// alignItems: "center",
+				alignItems: "center",
 				paddingBottom: "50px",
 				transition: "transform 0.3s ease-in-out",
 				transform: isSidebarOpen ? "translateX(400px)" : "translateX(0px)",
