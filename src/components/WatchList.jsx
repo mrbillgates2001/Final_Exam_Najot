@@ -21,7 +21,7 @@ const WatchList = () => {
 
 	return (
 		<div
-			className="sidebar bg-[#000000d0] max-sm:pt-10"
+			className="sidebar bg-[#000000d0] max-sm:pt-10 max-sm:fixed max-sm:mt-[7px]"
 			style={{
 				position: "fixed",
 				top: "60px",
