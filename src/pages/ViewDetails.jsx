@@ -44,7 +44,7 @@ const ViewDetails = () => {
 										<strong className="text-[56px]">{item.name}</strong>
 									</h1>
 								</div>
-								<p className="w-[495px] text-[18px] py-3 max-sm:w-[380px] ">
+								<p className="w-[495px] text-[18px] py-3 max-sm:w-[350px] ">
 									{item.name}
 									{singleCoin.description?.en?.slice(7, 189)}
 								</p>
@@ -88,7 +88,7 @@ const ViewDetails = () => {
 										<strong className="text-[56px]">{item.name}</strong>
 									</h1>
 								</div>
-								<p className="w-[495px] text-[18px] py-3 max-sm:w-[380px]">
+								<p className="w-[495px] text-[18px] py-3 max-sm:w-[350px]">
 									{item.name}
 									{singleCoin.description?.en?.slice(7, 189)}
 								</p>
@@ -134,7 +134,7 @@ const ViewDetails = () => {
 										<strong className="text-[56px]">{item.name}</strong>
 									</h1>
 								</div>
-								<p className="w-[495px] text-[18px] py-3 max-sm:w-[380px]">
+								<p className="w-[495px] text-[18px] py-3 max-sm:w-[350px]">
 									{item.name}
 									{singleCoin.description?.en?.slice(7, 189)}
 								</p>
@@ -166,7 +166,7 @@ const ViewDetails = () => {
 						))}
 			</div>
 
-			<div className="border-l-2 border-white-700 p-5 my-3 max-sm:overflow-x-auto">
+			<div className="border-l-2 border-white-700 p-3 my-3 max-sm:overflow-x-auto">
 				<ApexChart />
 			</div>
 		</div>

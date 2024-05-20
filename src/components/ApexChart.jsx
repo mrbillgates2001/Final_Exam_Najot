@@ -120,7 +120,7 @@ const ApexChart = () => {
 	};
 
 	return (
-		<div className="container relative">
+		<div className="container">
 			<div className="chart">
 				<Chart
 					options={chartData.options}
