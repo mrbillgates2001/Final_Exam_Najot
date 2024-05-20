@@ -27,7 +27,7 @@ const WatchList = () => {
 				top: "60px",
 				right: "0",
 				zIndex: "90",
-				overflowY: "scroll",
+				overflow: "auto",
 				width: "350px",
 				height: "100vh",
 				color: "white",
