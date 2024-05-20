@@ -9,7 +9,7 @@ const Hero = () => {
 	console.log(currency);
 
 	return (
-		<div className="hero mt-[60px] text-white text-center py-5 flex flex-col gap-5 max-sm:mt-[50px]">
+		<div className="hero mt-[60px] text-white text-center py-5 flex flex-col gap-5 max-sm:mt-[45px]">
 			<div>
 				<h1
 					className="text-primary text-[60px] max-sm:text-[36px]"
