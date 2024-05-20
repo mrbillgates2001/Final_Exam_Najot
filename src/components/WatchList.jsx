@@ -35,14 +35,15 @@ const WatchList = () => {
 				gap: "20px",
 				flexDirection: "column",
 				textAlign: "center",
-				paddingLeft: "40px",
+				alignItems: "center",
+				justifyContent: "center",
 				transition: "transform 0.3s ease-in-out",
 				transform: isSidebarOpen ? "translateX(400px)" : "translateX(0px)",
 			}}>
 			<div className="watchlist">
 				<h2 className="uppercase">Watchlist</h2>
 				{savedItems.length > 0 ? (
-					<div className="flex flex-wrap items-center p-4 gap-3 mx-auto">
+					<div className="flex flex-wrap justify-center items-center p-4 gap-3 mx-auto">
 						{currency === "USD" &&
 							savedItems.map((item, index) => (
 								<div
