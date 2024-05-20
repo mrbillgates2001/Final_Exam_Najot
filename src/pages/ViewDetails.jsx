@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { CryptoContext } from "../contexts/cryptoContext";
 import ApexChart from "../components/ApexChart";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCurrency } from "../contexts/currencyContext";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTheme } from "../contexts/modeContext";
@@ -11,13 +11,12 @@ const ViewDetails = () => {
 	const { theme } = useTheme();
 	const { currency } = useCurrency();
 	const { id } = useParams();
+	const navigate = useNavigate();
 
 	return (
-		<div className="mt-[60px] flex pb-[10px] relative flex-wrap">
+		<div className="mt-[60px] flex pb-[33px] relative flex-wrap">
 			<button
-				onClick={() => {
-					window.history.back();
-				}}
+				onClick={() => navigate("/")}
 				className="text-[35px] text-black absolute top-5 left-5"
 				style={{
 					zIndex: 10,
