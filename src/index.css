@@ -43,6 +43,9 @@ body.dark {
 	color: white;
 }
 
+.burger {
+	color: white !important;
+}
 
 /* LAYOUT */
 
@@ -98,6 +101,3 @@ body.dark {
 		transform: translateX(-100%);
 	}
 }
-
-
-	

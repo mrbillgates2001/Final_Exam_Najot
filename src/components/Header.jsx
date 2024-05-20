@@ -80,7 +80,9 @@ const Header = () => {
 							className="uppercase bg-primary text-[14px] py-1 px-3 text-black font-bold hover:bg-cyan-600 hover:transition-all w-[150px] max-sm:hidden">
 							{isSidebarOpen ? "Watch List" : "Close List"}
 						</button>
-						<button onClick={toggleSidebar} className="hidden max-sm:block">
+						<button
+							onClick={toggleSidebar}
+							className="hidden max-sm:block burger">
 							{isSidebarOpen ? <GiHamburgerMenu /> : <MdClose />}
 						</button>
 					</div>
