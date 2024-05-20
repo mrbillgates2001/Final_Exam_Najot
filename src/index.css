@@ -25,9 +25,26 @@
 
 body {
 	font-family: Montserrat !important;
-	background: #000000ed;
-	color: #fff;
 }
+
+/* DARK MODE */
+
+body.light {
+	background: linear-gradient(
+		180deg,
+		rgba(251, 255, 0, 0.5) 0%,
+		rgba(0, 4, 255, 0.5) 100%
+	);
+	color: black;
+}
+
+body.dark {
+	background: #000000ed;
+	color: white;
+}
+
+
+/* LAYOUT */
 
 .container {
 	max-width: 1280px;
@@ -78,6 +95,9 @@ body {
 		transform: translateX(0%);
 	}
 	100% {
-		transform: translateX(-200%);
+		transform: translateX(-100%);
 	}
 }
+
+
+	

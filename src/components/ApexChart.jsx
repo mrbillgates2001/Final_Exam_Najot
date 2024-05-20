@@ -3,17 +3,15 @@ import Chart from "react-apexcharts";
 import moment from "moment";
 import { CryptoContext } from "../contexts/cryptoContext";
 import { useParams } from "react-router-dom";
+import { useCurrency } from "../contexts/currencyContext";
 
 const ApexChart = () => {
 	const [selectedPeriod, setSelectedPeriod] = useState("24 Hours");
-	const { singleCoin, data } = useContext(CryptoContext);
+	const { data } = useContext(CryptoContext);
+	const { currency } = useCurrency();
 	const { id } = useParams();
 
-	console.log(singleCoin);
-
 	const datum = data.filter((item) => item.id === id);
-
-	console.log(datum[0]);
 
 	const periods = ["24 Hours", "30 Days", "3 Months", "1 Year"];
 
@@ -24,7 +22,13 @@ const ApexChart = () => {
 			).reverse(),
 			y: Array.from(
 				{ length: 24 },
-				() => Math.floor(Math.random() * datum[0]?.high_24h) + 1
+				() =>
+					Math.floor(
+						Math.random() *
+							((currency === "USD" && datum[0]?.high_24h) ||
+								(currency === "EUR" && datum[0]?.high_24h * 0.92) ||
+								(currency === "UZS" && datum[0]?.high_24h * 12569))
+					) + 1
 			),
 		},
 		"30 Days": {
@@ -33,7 +37,13 @@ const ApexChart = () => {
 			).reverse(),
 			y: Array.from(
 				{ length: 30 },
-				() => Math.floor(Math.random() * datum[0]?.high_24h) + 1
+				() =>
+					Math.floor(
+						Math.random() *
+							((currency === "USD" && datum[0]?.high_24h) ||
+								(currency === "EUR" && datum[0]?.high_24h * 0.92) ||
+								(currency === "UZS" && datum[0]?.high_24h * 12569))
+					) + 1
 			),
 		},
 		"3 Months": {
@@ -42,7 +52,13 @@ const ApexChart = () => {
 			).reverse(),
 			y: Array.from(
 				{ length: 90 },
-				() => Math.floor(Math.random() * datum[0]?.high_24h) + 1
+				() =>
+					Math.floor(
+						Math.random() *
+							((currency === "USD" && datum[0]?.high_24h) ||
+								(currency === "EUR" && datum[0]?.high_24h * 0.92) ||
+								(currency === "UZS" && datum[0]?.high_24h * 12569))
+					) + 1
 			),
 		},
 		"1 Year": {
@@ -51,7 +67,13 @@ const ApexChart = () => {
 			).reverse(),
 			y: Array.from(
 				{ length: 365 },
-				() => Math.floor(Math.random() * datum[0]?.high_24h) + 1
+				() =>
+					Math.floor(
+						Math.random() *
+							((currency === "USD" && datum[0]?.high_24h) ||
+								(currency === "EUR" && datum[0]?.high_24h * 0.92) ||
+								(currency === "UZS" && datum[0]?.high_24h * 12569))
+					) + 1
 			),
 		},
 	};
@@ -87,7 +109,7 @@ const ApexChart = () => {
 			},
 			grid: {
 				row: {
-					colors: ["black", "transparent"],
+					colors: ["#0000009e", "transparent"],
 					opacity: 0.9,
 				},
 			},
@@ -98,7 +120,7 @@ const ApexChart = () => {
 	};
 
 	return (
-		<div className="container">
+		<div className="container relative">
 			<div className="chart">
 				<Chart
 					options={chartData.options}
@@ -108,7 +130,7 @@ const ApexChart = () => {
 					width={900}
 				/>
 			</div>
-			<div className="buttons flex items-center justify-center gap-1">
+			<div className="buttons flex items-center justify-center gap-1 flex-wrap">
 				{periods.map((period) => (
 					<button
 						key={period}

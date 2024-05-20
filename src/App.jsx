@@ -9,6 +9,8 @@ import Header from "./components/Header";
 import WatchList from "./components/WatchList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CurrencyProvider } from "./contexts/currencyContext";
+import { ThemeProvider } from "./contexts/modeContext";
 
 const App = () => {
 	return (
@@ -23,19 +25,28 @@ const App = () => {
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
+				style={{
+					fontSize: "14px",
+				}}
 			/>
-			<WatchlistProvider>
-				<SidebarProvider>
-					<Router>
-						<Header />
-						<WatchList />
-						<Routes>
-							<Route path="/" element={<Home />} />
-							<Route path="/crypto-view/:id" element={<ViewDetails />} />
-						</Routes>
-					</Router>
-				</SidebarProvider>
-			</WatchlistProvider>
+			<ThemeProvider>
+				<div className="">
+					<CurrencyProvider>
+						<WatchlistProvider>
+							<SidebarProvider>
+								<Router>
+									<Header />
+									<WatchList />
+									<Routes>
+										<Route path="/" element={<Home />} />
+										<Route path="/crypto-view/:id" element={<ViewDetails />} />
+									</Routes>
+								</Router>
+							</SidebarProvider>
+						</WatchlistProvider>
+					</CurrencyProvider>
+				</div>
+			</ThemeProvider>
 		</Provider>
 	);
 };
