@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import { CryptoContext } from "../contexts/cryptoContext";
 import { useCurrency } from "../contexts/currencyContext";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Hero = () => {
-	const { data } = useContext(CryptoContext);
+	const { data, isLoading, override } = useContext(CryptoContext);
 	const { currency } = useCurrency();
-
-	console.log(currency);
 
 	return (
 		<div className="hero mt-[60px] text-white text-center py-5 flex flex-col gap-5 max-sm:mt-[60px]">
@@ -24,6 +23,16 @@ const Hero = () => {
 			</div>
 
 			<div className="slider-wrapper-container">
+				{isLoading && (
+					<ClipLoader
+						color="white"
+						loading={isLoading}
+						cssOverride={override}
+						size={150}
+						aria-label="Loading Spinner"
+						data-testid="loader"
+					/>
+				)}
 				<div className="slider flex gap-40 max-sm:gap-10">
 					{currency === "USD" &&
 						data.map((item, i) => (

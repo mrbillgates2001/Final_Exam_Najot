@@ -9,6 +9,12 @@ const Provider = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 
+	const override = {
+		display: "block",
+		margin: "0 auto",
+		borderColor: "white",
+	};
+
 	const fetchData = async () => {
 		try {
 			setIsLoading(true);
@@ -18,8 +24,9 @@ const Provider = ({ children }) => {
 			setData(res.data);
 			setIsLoading(false);
 		} catch (error) {
+
 			setError(error.message);
-			setIsLoading(false);
+			setIsLoading(true);
 		}
 	};
 
@@ -43,7 +50,8 @@ const Provider = ({ children }) => {
 	}, []);
 
 	return (
-		<CryptoContext.Provider value={{ data, singleCoin, isLoading, error }}>
+		<CryptoContext.Provider
+			value={{ data, singleCoin, isLoading, error, override }}>
 			{children}
 		</CryptoContext.Provider>
 	);

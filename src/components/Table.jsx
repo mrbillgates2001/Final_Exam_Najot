@@ -5,9 +5,10 @@ import { WatchlistContext } from "../contexts/watchListContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCurrency } from "../contexts/currencyContext";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Table = () => {
-	const { data } = useContext(CryptoContext);
+	const { data, isLoading, override } = useContext(CryptoContext);
 	const [search, setSearch] = useState("");
 	const { isItemSaved, saveItem } = useContext(WatchlistContext);
 	const navigate = useNavigate();
@@ -146,267 +147,279 @@ const Table = () => {
 			</div>
 
 			<div className="pb-10 max-sm:overflow-x-auto">
-				<table className="w-full text-right">
-					<thead
-						className="bg-primary text-black"
-						style={{
-							padding: "25px",
-						}}>
-						<tr className="text-[18px] font-black">
-							<th className="w-[40%] p-3 text-left">Coin</th>
-							<th
-								className="p-3 cursor-pointer"
-								onClick={() => handleSort("price")}>
-								Price{" "}
-								{sortCriteria === "price" && (sortOrder === "asc" ? "▲" : "▼")}
-							</th>
-							<th className="p-3">24h Changes</th>
-							<th
-								className="p-3 cursor-pointer"
-								onClick={() => handleSort("market_cap")}>
-								Market Cap{" "}
-								{sortCriteria === "market_cap" &&
-									(sortOrder === "asc" ? "▲" : "▼")}
-							</th>
-						</tr>
-					</thead>
-					<tbody className="px-5">
-						{currency === "USD" &&
-							selectedData.map((item, i) => (
-								<tr
-									onClick={() => navigate(`/crypto-view/${item.id}`)}
-									className="hover:bg-opacity-10 cursor-pointer hover:bg-slate-300 border-b-2 border-b-gray-100 text-[18px]"
-									key={i}>
-									<td className="w-[40%] p-3 text-left">
-										<div className="flex gap-2">
-											<img
-												src={item.image}
-												alt={item.name}
-												className="w-10 h-10"
-											/>
-											<div className="flex flex-col">
-												<span className="text-[24px] uppercase">
-													{item.symbol}
-												</span>
-												<span className="text-[14px] text-gray-500">
-													{item.name}
-												</span>
+				{isLoading ? (
+					<ClipLoader
+						color="white"
+						loading={isLoading}
+						cssOverride={override}
+						size={150}
+						aria-label="Loading Spinner"
+						data-testid="loader"
+					/>
+				) : (
+					<table className="w-full text-right">
+						<thead
+							className="bg-primary text-black"
+							style={{
+								padding: "25px",
+							}}>
+							<tr className="text-[18px] font-black">
+								<th className="w-[40%] p-3 text-left">Coin</th>
+								<th
+									className="p-3 cursor-pointer"
+									onClick={() => handleSort("price")}>
+									Price{" "}
+									{sortCriteria === "price" &&
+										(sortOrder === "asc" ? "▲" : "▼")}
+								</th>
+								<th className="p-3">24h Changes</th>
+								<th
+									className="p-3 cursor-pointer"
+									onClick={() => handleSort("market_cap")}>
+									Market Cap{" "}
+									{sortCriteria === "market_cap" &&
+										(sortOrder === "asc" ? "▲" : "▼")}
+								</th>
+							</tr>
+						</thead>
+						<tbody className="px-5">
+							{currency === "USD" &&
+								selectedData.map((item, i) => (
+									<tr
+										onClick={() => navigate(`/crypto-view/${item.id}`)}
+										className="hover:bg-opacity-10 cursor-pointer hover:bg-slate-300 border-b-2 border-b-gray-100 text-[18px]"
+										key={i}>
+										<td className="w-[40%] p-3 text-left">
+											<div className="flex gap-2">
+												<img
+													src={item.image}
+													alt={item.name}
+													className="w-10 h-10"
+												/>
+												<div className="flex flex-col">
+													<span className="text-[24px] uppercase">
+														{item.symbol}
+													</span>
+													<span className="text-[14px] text-gray-500">
+														{item.name}
+													</span>
+												</div>
 											</div>
-										</div>
-									</td>
-									<td className="p-3">
-										${" "}
-										{item.current_price
-											.toString()
-											.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-									</td>
-
-									<td className="p-3 relative">
-										<MdRemoveRedEye
-											onClick={(e) => handleIcon(item, e)}
-											style={{
-												color: isItemSaved(item.id) ? "#00ff00ed" : "white",
-												cursor: isItemSaved(item.id)
-													? "not-allowed"
-													: "pointer",
-											}}
-											className="absolute top-[35px] right-16 text-[24px]"
-										/>
-										<span className="text-green-500">
-											{item.price_change_percentage_24h > 0 ? "+" : ""}
-										</span>
-										<span
-											style={{
-												color:
-													item.price_change_percentage_24h < 0
-														? "red"
-														: "#00C832",
-											}}>
-											{item.price_change_percentage_24h.toFixed(2)}
-										</span>
-										<span
-											className="text-green-500"
-											style={{
-												color:
-													item.price_change_percentage_24h > 0
-														? "#00C832"
-														: "red",
-											}}>
-											%
-										</span>
-									</td>
-
-									<td className="p-3">
-										<span>$</span>{" "}
-										<span>
-											{item.market_cap
+										</td>
+										<td className="p-3">
+											${" "}
+											{item.current_price
 												.toString()
 												.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-											M
-										</span>
-									</td>
-								</tr>
-							))}
+										</td>
 
-						{currency === "EUR" &&
-							selectedData.map((item, i) => (
-								<tr
-									onClick={() => navigate(`/crypto-view/${item.id}`)}
-									className="hover:bg-opacity-10 cursor-pointer hover:bg-slate-300 border-b-2 border-b-gray-100 text-[18px]"
-									key={i}>
-									<td className="w-[40%] p-3 text-left">
-										<div className="flex gap-2">
-											<img
-												src={item.image}
-												alt={item.name}
-												className="w-10 h-10"
+										<td className="p-3 relative">
+											<MdRemoveRedEye
+												onClick={(e) => handleIcon(item, e)}
+												style={{
+													color: isItemSaved(item.id) ? "#00ff00ed" : "white",
+													cursor: isItemSaved(item.id)
+														? "not-allowed"
+														: "pointer",
+												}}
+												className="absolute top-[35px] right-16 text-[24px]"
 											/>
-											<div className="flex flex-col">
-												<span className="text-[24px] uppercase">
-													{item.symbol}
-												</span>
-												<span className="text-[14px] text-gray-500">
-													{item.name}
-												</span>
+											<span className="text-green-500">
+												{item.price_change_percentage_24h > 0 ? "+" : ""}
+											</span>
+											<span
+												style={{
+													color:
+														item.price_change_percentage_24h < 0
+															? "red"
+															: "#00C832",
+												}}>
+												{item.price_change_percentage_24h.toFixed(2)}
+											</span>
+											<span
+												className="text-green-500"
+												style={{
+													color:
+														item.price_change_percentage_24h > 0
+															? "#00C832"
+															: "red",
+												}}>
+												%
+											</span>
+										</td>
+
+										<td className="p-3">
+											<span>$</span>{" "}
+											<span>
+												{item.market_cap
+													.toString()
+													.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+												M
+											</span>
+										</td>
+									</tr>
+								))}
+
+							{currency === "EUR" &&
+								selectedData.map((item, i) => (
+									<tr
+										onClick={() => navigate(`/crypto-view/${item.id}`)}
+										className="hover:bg-opacity-10 cursor-pointer hover:bg-slate-300 border-b-2 border-b-gray-100 text-[18px]"
+										key={i}>
+										<td className="w-[40%] p-3 text-left">
+											<div className="flex gap-2">
+												<img
+													src={item.image}
+													alt={item.name}
+													className="w-10 h-10"
+												/>
+												<div className="flex flex-col">
+													<span className="text-[24px] uppercase">
+														{item.symbol}
+													</span>
+													<span className="text-[14px] text-gray-500">
+														{item.name}
+													</span>
+												</div>
 											</div>
-										</div>
-									</td>
-									<td className="p-3">
-										€{" "}
-										{(item.current_price * 0.92)
-											.toFixed(2)
-											.toString()
-											.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-									</td>
-
-									<td className="p-3 relative">
-										<MdRemoveRedEye
-											onClick={(e) => handleIcon(item, e)}
-											style={{
-												color: isItemSaved(item.id) ? "#00ff00ed" : "white",
-												cursor: isItemSaved(item.id)
-													? "not-allowed"
-													: "pointer",
-											}}
-											className="absolute top-[35px] right-16 text-[24px]"
-										/>
-										<span className="text-green-500">
-											{item.price_change_percentage_24h > 0 ? "+" : ""}
-										</span>
-										<span
-											style={{
-												color:
-													item.price_change_percentage_24h < 0
-														? "red"
-														: "#00C832",
-											}}>
-											{item.price_change_percentage_24h.toFixed(2)}
-										</span>
-										<span
-											className="text-green-500"
-											style={{
-												color:
-													item.price_change_percentage_24h > 0
-														? "#00C832"
-														: "red",
-											}}>
-											%
-										</span>
-									</td>
-
-									<td className="p-3">
-										<span>€</span>{" "}
-										<span>
-											{(item.market_cap * 0.92)
+										</td>
+										<td className="p-3">
+											€{" "}
+											{(item.current_price * 0.92)
 												.toFixed(2)
 												.toString()
 												.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-											M
-										</span>
-									</td>
-								</tr>
-							))}
+										</td>
 
-						{currency === "UZS" &&
-							selectedData.map((item, i) => (
-								<tr
-									onClick={() => navigate(`/crypto-view/${item.id}`)}
-									className="hover:bg-opacity-10 cursor-pointer hover:bg-slate-300 border-b-2 border-b-gray-100 text-[18px]"
-									key={i}>
-									<td className="w-[40%] p-3 text-left">
-										<div className="flex gap-2">
-											<img
-												src={item.image}
-												alt={item.name}
-												className="w-10 h-10"
+										<td className="p-3 relative">
+											<MdRemoveRedEye
+												onClick={(e) => handleIcon(item, e)}
+												style={{
+													color: isItemSaved(item.id) ? "#00ff00ed" : "white",
+													cursor: isItemSaved(item.id)
+														? "not-allowed"
+														: "pointer",
+												}}
+												className="absolute top-[35px] right-16 text-[24px]"
 											/>
-											<div className="flex flex-col">
-												<span className="text-[24px] uppercase">
-													{item.symbol}
-												</span>
-												<span className="text-[14px] text-gray-500">
-													{item.name}
-												</span>
+											<span className="text-green-500">
+												{item.price_change_percentage_24h > 0 ? "+" : ""}
+											</span>
+											<span
+												style={{
+													color:
+														item.price_change_percentage_24h < 0
+															? "red"
+															: "#00C832",
+												}}>
+												{item.price_change_percentage_24h.toFixed(2)}
+											</span>
+											<span
+												className="text-green-500"
+												style={{
+													color:
+														item.price_change_percentage_24h > 0
+															? "#00C832"
+															: "red",
+												}}>
+												%
+											</span>
+										</td>
+
+										<td className="p-3">
+											<span>€</span>{" "}
+											<span>
+												{(item.market_cap * 0.92)
+													.toFixed(2)
+													.toString()
+													.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+												M
+											</span>
+										</td>
+									</tr>
+								))}
+
+							{currency === "UZS" &&
+								selectedData.map((item, i) => (
+									<tr
+										onClick={() => navigate(`/crypto-view/${item.id}`)}
+										className="hover:bg-opacity-10 cursor-pointer hover:bg-slate-300 border-b-2 border-b-gray-100 text-[18px]"
+										key={i}>
+										<td className="w-[40%] p-3 text-left">
+											<div className="flex gap-2">
+												<img
+													src={item.image}
+													alt={item.name}
+													className="w-10 h-10"
+												/>
+												<div className="flex flex-col">
+													<span className="text-[24px] uppercase">
+														{item.symbol}
+													</span>
+													<span className="text-[14px] text-gray-500">
+														{item.name}
+													</span>
+												</div>
 											</div>
-										</div>
-									</td>
-									<td className="p-3">
-										{(item.current_price * 12659)
-											.toFixed(2)
-											.toString()
-											.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-										sum
-									</td>
-
-									<td className="p-3 relative">
-										<MdRemoveRedEye
-											onClick={(e) => handleIcon(item, e)}
-											style={{
-												color: isItemSaved(item.id) ? "#00ff00ed" : "white",
-												cursor: isItemSaved(item.id)
-													? "not-allowed"
-													: "pointer",
-											}}
-											className="absolute top-[35px] right-16 text-[24px]"
-										/>
-										<span className="text-green-500">
-											{item.price_change_percentage_24h > 0 ? "+" : ""}
-										</span>
-										<span
-											style={{
-												color:
-													item.price_change_percentage_24h < 0
-														? "red"
-														: "#00C832",
-											}}>
-											{item.price_change_percentage_24h.toFixed(2)}
-										</span>
-										<span
-											className="text-green-500"
-											style={{
-												color:
-													item.price_change_percentage_24h > 0
-														? "#00C832"
-														: "red",
-											}}>
-											%
-										</span>
-									</td>
-
-									<td className="p-3">
-										<span>
-											{(item.market_cap * 12659)
+										</td>
+										<td className="p-3">
+											{(item.current_price * 12659)
 												.toFixed(2)
 												.toString()
-												.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-											M
-										</span>{" "}
-										<span>sum</span>
-									</td>
-								</tr>
-							))}
-					</tbody>
-				</table>
+												.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+											sum
+										</td>
+
+										<td className="p-3 relative">
+											<MdRemoveRedEye
+												onClick={(e) => handleIcon(item, e)}
+												style={{
+													color: isItemSaved(item.id) ? "#00ff00ed" : "white",
+													cursor: isItemSaved(item.id)
+														? "not-allowed"
+														: "pointer",
+												}}
+												className="absolute top-[35px] right-16 text-[24px]"
+											/>
+											<span className="text-green-500">
+												{item.price_change_percentage_24h > 0 ? "+" : ""}
+											</span>
+											<span
+												style={{
+													color:
+														item.price_change_percentage_24h < 0
+															? "red"
+															: "#00C832",
+												}}>
+												{item.price_change_percentage_24h.toFixed(2)}
+											</span>
+											<span
+												className="text-green-500"
+												style={{
+													color:
+														item.price_change_percentage_24h > 0
+															? "#00C832"
+															: "red",
+												}}>
+												%
+											</span>
+										</td>
+
+										<td className="p-3">
+											<span>
+												{(item.market_cap * 12659)
+													.toFixed(2)
+													.toString()
+													.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+												M
+											</span>{" "}
+											<span>sum</span>
+										</td>
+									</tr>
+								))}
+						</tbody>
+					</table>
+				)}
 			</div>
 
 			<div className="flex justify-center pb-10 space-x-2 text-primary">
